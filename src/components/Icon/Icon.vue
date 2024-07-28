@@ -10,7 +10,7 @@ import type { IconProps } from './types'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 defineOptions({
-  name: 'VkIcon',
+  name: 'SkIcon',
   inheritAttrs: false
 })
 const props = defineProps<IconProps>()
