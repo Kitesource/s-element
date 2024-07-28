@@ -21,11 +21,13 @@ onMounted(() => {
   </header>
 
   <main>
-    <h2>Button</h2>
+    <h2>Button 按钮</h2>
     <Button ref="buttonRef">Test Button</Button>
     <Button plain>Plain Button</Button>
     <Button round>Round Button</Button>
-    <Button circle>SK</Button>
+    <Button circle size="large" icon="check" />
+    <Button circle icon="magnifying-glass" />
+    <Button circle size="small" icon="magnifying-glass" />
     <Button disabled>Disabled Button</Button><br /><br />
     <Button type="primary">Primary</Button>
     <Button type="success">Success</Button>
@@ -40,9 +42,9 @@ onMounted(() => {
     <Button size="large">Large</Button>
     <Button size="small">Small</Button><br /><br />
     <Button size="large" loading>Loading</Button>
-    <Button size="large" icon="arrow-up">Icon</Button><br /><br />
+    <Button size="large" icon="magnifying-glass">magnifying-glass</Button><br /><br />
 
-    <h2>Collapse</h2>
+    <h2>Collapse 折叠看板</h2>
     <Collapse v-model="collapseValue">
       <CollapseItem name="a" title="Title A">
         <h1>headline title</h1>
@@ -56,7 +58,7 @@ onMounted(() => {
       </CollapseItem>
     </Collapse>
 
-    <h2>Icon</h2>
+    <h2>Icon 图标</h2>
     <!-- https://fontawesome.com/search?o=r&m=free -->
     <div class="icon-wrapper">
       <Icon icon="phone" :size="size" type="success" />

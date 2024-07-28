@@ -8,14 +8,16 @@
       'is-plain': plain,
       'is-round': round,
       'is-circle': circle,
-      'is-disabled': disabled,
+      'is-disabled': disabled || loading,
       'is-loading': loading
     }"
     :disabled="disabled || loading"
     :autofocus="autofocus"
     :type="nativeType"
   >
-    <span>
+    <Icon icon="spinner" spin v-if="loading" />
+    <Icon :icon="icon" v-if="icon" />
+    <span v-if="$slots.default">
       <slot />
     </span>
   </button>
@@ -23,6 +25,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { ButtonProps } from './types'
+import Icon from '@/components/Icon/Icon.vue'
+
 defineOptions({
   name: 'SkButton'
 })

@@ -65,8 +65,9 @@
   }
   /*circle*/
   &.is-circle {
+    width: 32px;
     border-radius: 50%;
-    padding: 8px;
+    padding: 0;
   }
   /*disabled*/
   &.is-disabled, &.is-disabled:hover, &.is-disabled:focus, 
@@ -114,12 +115,24 @@
   padding: 12px 19px;
   font-size: var(--sk-font-size-base);
   border-radius: var(--sk-border-radius-base);
+  &.is-circle {
+    width: var(--sk-button-size);
+  }
+  & .svg-inline--fa {
+    height: 1.2rem;
+  }
 }
+
 .sk-button--small {
   --sk-button-size: 24px;
   height: var(--sk-button-size);
   padding: 5px 11px;
   font-size: 12px;
   border-radius: calc(var(--sk-border-radius-base) - 1px);
+  &.is-circle {
+    width: var(--sk-button-size);
+  }
+  & .svg-inline--fa {
+    height: 0.6rem;
+  }
 }
-
