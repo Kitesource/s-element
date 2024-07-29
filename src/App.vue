@@ -4,6 +4,8 @@ import Button from '@/components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
 import Icon from '@/components/Icon/Icon.vue'
+import Tooltip from '@/components/Tooltip/Tooltip.vue'
+import type { TooltipInstance } from '@/components/Tooltip/types'
 
 const collapseValue = ref<string[]>([])
 const size = ref<any>('3x')
@@ -13,6 +15,14 @@ onMounted(() => {
     // size.value = '2xl'
   }, 2000)
 })
+
+const tooltipRef = ref<TooltipInstance | null>(null)
+function showTooltip() {
+  tooltipRef.value?.show()
+}
+function hideTooltip() {
+  tooltipRef.value?.hide()
+}
 </script>
 
 <template>
@@ -60,7 +70,7 @@ onMounted(() => {
 
     <h2>Icon 图标</h2>
     <!-- https://fontawesome.com/search?o=r&m=free -->
-    <div class="icon-wrapper">
+    <div class="grid-wrapper">
       <Icon icon="phone" :size="size" type="success" />
       <Icon icon="user" :size="size" type="primary" />
       <Icon icon="fa-brands fa-twitter" :size="size" type="warning" />
@@ -71,7 +81,28 @@ onMounted(() => {
       <Icon icon="fa-brands fa-apple" :size="size" type="primary" />
       <Icon icon="cloud" :size="size" type="warning" />
       <Icon icon="lock" :size="size" type="info" />
-      <Icon icon="fa-regular fa-heart" :size="size" type="danger" />
+      <Tooltip ref="tooltipRef" content="hello tooltip!" manual placement="right">
+        <Icon icon="fa-regular fa-heart" :size="size" type="danger" />
+      </Tooltip>
+    </div>
+
+    <h2>Tooltip 文字提示</h2>
+    <div class="grid-wrapper">
+      <Tooltip content="hello tooltip">
+        <Button>hover trigger</Button>
+      </Tooltip>
+      <Tooltip trigger="click">
+        <template #content>
+          <div>Title</div>
+          <p>slot with content</p>
+        </template>
+        <Button type="primary">click trigger</Button>
+      </Tooltip>
+      <Button round @click="showTooltip">manual Open</Button>
+      <Button round @click="hideTooltip">manual Hiden</Button>
+      <Tooltip content="hello tooltip" effect="light">
+        <Button>effect light</Button>
+      </Tooltip>
     </div>
   </main>
 </template>
@@ -83,6 +114,9 @@ header {
   justify-content: center;
   align-items: center;
   font-weight: 600;
+}
+main {
+  padding: 24px;
 }
 
 .logo {
@@ -108,7 +142,7 @@ header {
   }
 }
 
-.icon-wrapper {
+.grid-wrapper {
   width: 40%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
