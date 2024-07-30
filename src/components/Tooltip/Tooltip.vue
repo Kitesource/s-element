@@ -23,10 +23,7 @@
 </template>
 <script setup lang="ts">
 import { ref, watch, reactive, onUnmounted, computed } from 'vue'
-<<<<<<< HEAD
 // https://popper.js.org/
-=======
->>>>>>> bf1787afeff501f734167fa585256fcaaf6af464
 import { createPopper } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
 import { debounce } from 'lodash-es'

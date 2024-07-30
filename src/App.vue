@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive, h } from 'vue'
 import Button from '@/components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
 import Icon from '@/components/Icon/Icon.vue'
 import Tooltip from '@/components/Tooltip/Tooltip.vue'
 import type { TooltipInstance } from '@/components/Tooltip/types'
+import Dropdown from '@/components/Dropdown/Dropdown'
+import Dropdown2 from '@/components/Dropdown/Dropdown.vue'
+import type { MenuOption } from '@/components/Dropdown/types'
 
 const collapseValue = ref<string[]>([])
 const size = ref<any>('3x')
@@ -23,6 +26,13 @@ function showTooltip() {
 function hideTooltip() {
   tooltipRef.value?.hide()
 }
+
+const dropdownOptions = reactive<MenuOption[]>([
+  { key: 1, label: h('b', null, 'item-1-vNode') },
+  { key: 2, label: 'item-2', disabled: true },
+  { key: 3, label: 'item-3', divided: true },
+  { key: 4, label: 'item-4' }
+])
 </script>
 
 <template>
@@ -81,9 +91,7 @@ function hideTooltip() {
       <Icon icon="fa-brands fa-apple" :size="size" type="primary" />
       <Icon icon="cloud" :size="size" type="warning" />
       <Icon icon="lock" :size="size" type="info" />
-      <Tooltip ref="tooltipRef" content="hello tooltip!" manual placement="right">
-        <Icon icon="fa-regular fa-heart" :size="size" type="danger" />
-      </Tooltip>
+      <Icon icon="fa-regular fa-heart" :size="size" type="danger" />
     </div>
 
     <h2>Tooltip 文字提示</h2>
@@ -98,11 +106,24 @@ function hideTooltip() {
         </template>
         <Button type="primary">click trigger</Button>
       </Tooltip>
-      <Button round @click="showTooltip">manual Open</Button>
+      <Tooltip ref="tooltipRef" content="hello tooltip!" manual placement="top">
+        <Button round @click="showTooltip">manual Open</Button>
+      </Tooltip>
+
       <Button round @click="hideTooltip">manual Hiden</Button>
       <Tooltip content="hello tooltip" effect="light">
         <Button>effect light</Button>
       </Tooltip>
+    </div>
+
+    <h2>Dropdown 下拉菜单</h2>
+    <div class="grid-wrapper">
+      <Dropdown :menu-options="dropdownOptions">
+        <Button>Hover trigger</Button>
+      </Dropdown>
+      <Dropdown2 :menu-options="dropdownOptions" trigger="click">
+        <Button>Click trigger</Button>
+      </Dropdown2>
     </div>
   </main>
 </template>
