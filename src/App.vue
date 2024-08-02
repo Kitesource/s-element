@@ -9,6 +9,7 @@ import type { TooltipInstance } from '@/components/Tooltip/types'
 import Dropdown from '@/components/Dropdown/Dropdown'
 import Dropdown2 from '@/components/Dropdown/Dropdown.vue'
 import type { MenuOption } from '@/components/Dropdown/types'
+import { createMessage } from '@/components/Message/method'
 
 const collapseValue = ref<string[]>([])
 const size = ref<any>('3x')
@@ -33,6 +34,15 @@ const dropdownOptions = reactive<MenuOption[]>([
   { key: 3, label: 'item-3', divided: true },
   { key: 4, label: 'item-4' }
 ])
+
+function showMessage(type: any) {
+  createMessage({
+    message: `这个是一条${type}类型的消息`,
+    type,
+    duration: Math.random() > 0.5 ? 0 : 3000,
+    showClose: true
+  })
+}
 </script>
 
 <template>
@@ -124,6 +134,21 @@ const dropdownOptions = reactive<MenuOption[]>([
       <Dropdown2 :menu-options="dropdownOptions" trigger="click">
         <Button>Click trigger</Button>
       </Dropdown2>
+    </div>
+
+    <h2>Message 消息提示</h2>
+    <!-- https://fontawesome.com/search?o=r&m=free -->
+    <div class="grid-wrapper">
+      <Icon icon="phone" :size="size" type="success" @click="showMessage('success')" />
+      <Icon icon="user" :size="size" type="primary" @click="showMessage('primary')" />
+      <Icon
+        icon="fa-brands fa-twitter"
+        :size="size"
+        type="warning"
+        @click="showMessage('warning')"
+      />
+      <Icon icon="image" :size="size" type="info" @click="showMessage('info')" />
+      <Icon icon="heart" :size="size" type="danger" @click="showMessage('danger')" />
     </div>
   </main>
 </template>
