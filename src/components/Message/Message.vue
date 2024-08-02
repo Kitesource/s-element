@@ -27,8 +27,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import type { MessageProps } from './types'
-import RenderVnode from '../Common/RenderVnode'
-import Icon from '../Icon/Icon.vue'
+import RenderVnode from '@/components/Common/RenderVnode'
+import Icon from '@/components/Icon/Icon.vue'
 import { getLastBottomOffset } from './method'
 import useEventListener from '@/hooks/useEventListener'
 const props = withDefaults(defineProps<MessageProps>(), {
@@ -54,6 +54,7 @@ const cssStyle = computed(() => ({
   top: topOffset.value + 'px',
   zIndex: props.zIndex
 }))
+
 let timer: any
 function startTimer() {
   if (props.duration === 0) return
@@ -64,6 +65,7 @@ function startTimer() {
 function clearTimer() {
   clearTimeout(timer)
 }
+
 onMounted(async () => {
   visible.value = true
   startTimer()

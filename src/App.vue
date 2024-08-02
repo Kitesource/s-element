@@ -10,6 +10,7 @@ import Dropdown from '@/components/Dropdown/Dropdown'
 import Dropdown2 from '@/components/Dropdown/Dropdown.vue'
 import type { MenuOption } from '@/components/Dropdown/types'
 import { createMessage } from '@/components/Message/method'
+import Input from '@/components/Input/Input.vue'
 
 const collapseValue = ref<string[]>([])
 const size = ref<any>('3x')
@@ -43,6 +44,8 @@ function showMessage(type: any) {
     showClose: true
   })
 }
+
+const inputValue = ref('')
 </script>
 
 <template>
@@ -137,7 +140,6 @@ function showMessage(type: any) {
     </div>
 
     <h2>Message 消息提示</h2>
-    <!-- https://fontawesome.com/search?o=r&m=free -->
     <div class="grid-wrapper">
       <Icon icon="phone" :size="size" type="success" @click="showMessage('success')" />
       <Icon icon="user" :size="size" type="primary" @click="showMessage('primary')" />
@@ -149,6 +151,17 @@ function showMessage(type: any) {
       />
       <Icon icon="image" :size="size" type="info" @click="showMessage('info')" />
       <Icon icon="heart" :size="size" type="danger" @click="showMessage('danger')" />
+    </div>
+
+    <h2>Input 输入框</h2>
+    <div style="width: 50%">
+      <Input v-model="inputValue" clearable>
+        <template #prefix>
+          <Icon icon="magnifying-glass" />
+        </template>
+      </Input>
+      <Input v-model="inputValue" type="password" />
+      <Input v-model="inputValue" type="textarea" />
     </div>
   </main>
 </template>
