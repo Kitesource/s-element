@@ -11,6 +11,7 @@ import Dropdown2 from '@/components/Dropdown/Dropdown.vue'
 import type { MenuOption } from '@/components/Dropdown/types'
 import { createMessage } from '@/components/Message/method'
 import Input from '@/components/Input/Input.vue'
+import Switch from '@/components/Switch/Switch.vue'
 
 const collapseValue = ref<string[]>([])
 const size = ref<any>('3x')
@@ -46,6 +47,7 @@ function showMessage(type: any) {
 }
 
 const inputValue = ref('')
+const switchValue = ref(false)
 </script>
 
 <template>
@@ -154,7 +156,7 @@ const inputValue = ref('')
     </div>
 
     <h2>Input 输入框</h2>
-    <div style="width: 50%">
+    <div style="width: 50%; display: flex; flex-direction: column; gap: 16px">
       <Input v-model="inputValue" clearable>
         <template #prefix>
           <Icon icon="magnifying-glass" />
@@ -162,6 +164,12 @@ const inputValue = ref('')
       </Input>
       <Input v-model="inputValue" type="password" />
       <Input v-model="inputValue" type="textarea" />
+    </div>
+
+    <h2>Switch 切换开关</h2>
+    <div style="width: 50%; display: flex; align-items: center; gap: 16px">
+      <Switch v-model="switchValue" />
+      <Switch v-model="switchValue" active-text="ON" inactive-text="OFF" />
     </div>
   </main>
 </template>
