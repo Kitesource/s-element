@@ -17,9 +17,10 @@
       <Input
         v-model="states.inputValue"
         :disabled="disabled"
-        :placeholder="placeholder"
+        :placeholder="filteredPlaceHolder"
         ref="inputRef"
-        readonly
+        :readonly="!filterable || !isDropdownShow"
+        @input="debounceFilter"
       >
         <template #suffix>
           <Icon
@@ -38,8 +39,14 @@
         </template>
       </Input>
       <template #content>
-        <ul class="sk-select__menu">
-          <template v-for="(item, index) in options" :key="index">
+        <div v-if="states.loading" class="sk-select__loading">
+          <Icon icon="spinner" spin />
+        </div>
+        <div v-else-if="filterable && !filteredOptions.length" class="sk-select__nodata">
+          no matching data
+        </div>
+        <ul v-else class="sk-select__menu">
+          <template v-for="(item, index) in filteredOptions" :key="index">
             <li
               class="sk-select__menu-item"
               :class="{
@@ -58,9 +65,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import type { Ref } from 'vue'
+import { isFunction, debounce } from 'lodash-es'
 import type { SelectProps, SelectEmits, SelectOption, SelectStates } from './types'
+import { cloneDeep } from '@/utils/util'
 import Tooltip from '@/components/Tooltip/Tooltip.vue'
 import type { TooltipInstance } from '@/components/Tooltip/types'
 import Input from '@/components/Input/Input.vue'
@@ -78,7 +87,9 @@ defineOptions({
 const props = withDefaults(defineProps<SelectProps>(), {
   options: () => [],
   placeholder: '请选择',
-  disabled: false
+  disabled: false,
+  filterable: false,
+  remote: false
 })
 const emits = defineEmits<SelectEmits>()
 
@@ -88,7 +99,8 @@ const inputRef = ref() as Ref<InputInstance>
 const states = reactive<SelectStates>({
   inputValue: initialOption ? initialOption.label : '',
   selectedOption: initialOption,
-  mouseHover: false
+  mouseHover: false,
+  loading: false
 })
 const isDropdownShow = ref(false)
 const popperOptions: any = {
@@ -110,6 +122,42 @@ const popperOptions: any = {
     }
   ]
 }
+const filteredOptions = ref(props.options)
+watch(
+  () => props.options,
+  (val) => {
+    filteredOptions.value = cloneDeep(val)
+  },
+  { deep: true }
+)
+function onFilter() {
+  generateFilterOptions(states.inputValue)
+}
+const timeout = computed(() => (props.remote ? 300 : 0))
+function debounceFilter() {
+  return debounce(onFilter, timeout.value)()
+}
+
+async function generateFilterOptions(searchValue: string) {
+  if (!props.filterable) return
+  if (props.filterMethod && isFunction(props.filterMethod)) {
+    filteredOptions.value = props.filterMethod(searchValue)
+  } else if (props.remote && props.remoteMethod && isFunction(props.remoteMethod)) {
+    states.loading = true
+    try {
+      filteredOptions.value = await props.remoteMethod(searchValue)
+    } catch (error) {
+      console.error(error)
+      filteredOptions.value = []
+    }
+    states.loading = false
+  } else {
+    filteredOptions.value = props.options.filter((v) =>
+      v.label?.toLowerCase().includes(searchValue?.toLowerCase())
+    )
+  }
+}
+
 const showClearIcon = computed(() => {
   return (
     props.clearable && states.selectedOption && states.mouseHover && states.inputValue.trim() !== ''
@@ -124,10 +172,27 @@ function onClear(params: type) {
 }
 function NOOP() {}
 
+const filteredPlaceHolder = computed(() => {
+  return props.filterable && states.selectedOption && isDropdownShow.value
+    ? states.selectedOption.label
+    : props.placeholder
+})
 const controlDropdown = (show: boolean) => {
   if (show) {
+    if (props.filterable) {
+      if (states.selectedOption) {
+        // filterable 下 清空之前选择的值
+        states.inputValue = ''
+      }
+      // 选择值后重新生成 options
+      generateFilterOptions(states.inputValue)
+    }
     tooltipRef.value.show()
   } else {
+    if (props.filterable && states.selectedOption) {
+      // blur时将之前的值回显
+      states.inputValue = states.selectedOption.label
+    }
     tooltipRef.value.hide()
   }
   isDropdownShow.value = show
