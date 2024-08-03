@@ -1,15 +1,15 @@
 import {
-  config$1,
-  icon,
-  parse$1,
-  text
-} from "./chunk-2Q2UYAJL.js";
-import {
   computed,
   defineComponent,
   h,
   watch
 } from "./chunk-XILDEMAI.js";
+import {
+  config$1,
+  icon,
+  parse$1,
+  text
+} from "./chunk-2Q2UYAJL.js";
 
 // node_modules/.pnpm/@fortawesome+vue-fontawesome@3.0.8_hrmujycidp4kz2374z6h2wsqpi/node_modules/@fortawesome/vue-fontawesome/index.es.js
 function ownKeys(e, r) {

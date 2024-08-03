@@ -1,5 +1,11 @@
 <template>
-  <div class="sk-select" :class="{ 'is-disabled': disabled }" @click="toggleDropdown">
+  <div
+    class="sk-select"
+    :class="{ 'is-disabled': disabled }"
+    @click="toggleDropdown"
+    @mouseenter="states.mouseHover = true"
+    @mouseleave="states.mouseHover = false"
+  >
     <Tooltip
       placement="bottom-start"
       ref="tooltipRef"
@@ -16,7 +22,19 @@
         readonly
       >
         <template #suffix>
-          <Icon icon="angle-down" class="header-angle" :class="{ 'is-active': isDropdownShow }" />
+          <Icon
+            v-if="showClearIcon"
+            icon="circle-xmark"
+            class="sk-input__clear"
+            @mousedown.prevent="NOOP"
+            @click.stop="onClear"
+          />
+          <Icon
+            v-else
+            icon="angle-down"
+            class="header-angle"
+            :class="{ 'is-active': isDropdownShow }"
+          />
         </template>
       </Input>
       <template #content>
@@ -31,7 +49,7 @@
               :id="`select-item-${item.value}`"
               @click.stop="itemSelect(item)"
             >
-              {{ item.label }}
+              <RenderVNode :vNode="renderLabel ? renderLabel(item) : item.label" />
             </li>
           </template>
         </ul>
@@ -40,14 +58,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import type { Ref } from 'vue'
 import type { SelectProps, SelectEmits, SelectOption, SelectStates } from './types'
 import Tooltip from '@/components/Tooltip/Tooltip.vue'
-import type { TooltipInstance } from '../Tooltip/types'
+import type { TooltipInstance } from '@/components/Tooltip/types'
 import Input from '@/components/Input/Input.vue'
 import Icon from '@/components/Icon/Icon.vue'
 import type { InputInstance } from '@/components/Input/types'
+import RenderVNode from '@/components/Common/RenderVnode'
 
 const findOption = (value: string) => {
   const option = props.options.find((option) => option.value === value)
@@ -68,7 +87,8 @@ const tooltipRef = ref() as Ref<TooltipInstance>
 const inputRef = ref() as Ref<InputInstance>
 const states = reactive<SelectStates>({
   inputValue: initialOption ? initialOption.label : '',
-  selectedOption: initialOption
+  selectedOption: initialOption,
+  mouseHover: false
 })
 const isDropdownShow = ref(false)
 const popperOptions: any = {
@@ -90,6 +110,20 @@ const popperOptions: any = {
     }
   ]
 }
+const showClearIcon = computed(() => {
+  return (
+    props.clearable && states.selectedOption && states.mouseHover && states.inputValue.trim() !== ''
+  )
+})
+function onClear(params: type) {
+  states.selectedOption = null
+  states.inputValue = ''
+  emits('clear')
+  emits('change', '')
+  emits('update:modelValue', '')
+}
+function NOOP() {}
+
 const controlDropdown = (show: boolean) => {
   if (show) {
     tooltipRef.value.show()
