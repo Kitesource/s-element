@@ -12,6 +12,8 @@ import type { MenuOption } from '@/components/Dropdown/types'
 import { createMessage } from '@/components/Message/method'
 import Input from '@/components/Input/Input.vue'
 import Switch from '@/components/Switch/Switch.vue'
+import Select from '@/components/Select/Select.vue'
+import type { SelectOption } from './components/Select/types'
 
 const collapseValue = ref<string[]>([])
 const size = ref<any>('3x')
@@ -48,6 +50,14 @@ function showMessage(type: any) {
 
 const inputValue = ref('')
 const switchValue = ref(false)
+
+const selectValue = ref('')
+const selectOptions = reactive<SelectOption[]>([
+  { value: '1', label: 'item-1' },
+  { value: '2', label: 'item-2' },
+  { value: '3', label: 'item-3' },
+  { value: '4', label: 'item-4', disabled: true }
+])
 </script>
 
 <template>
@@ -171,6 +181,12 @@ const switchValue = ref(false)
       <Switch v-model="switchValue" />
       <Switch v-model="switchValue" active-text="ON" inactive-text="OFF" />
     </div>
+
+    <h2>Select 选择框</h2>
+    <div style="width: 50%; display: flex; align-items: center; gap: 16px">
+      <Select v-model="selectValue" :options="selectOptions" />
+      <Select v-model="selectValue" :options="selectOptions" filterable clearable />
+    </div>
   </main>
 </template>
 
@@ -214,5 +230,9 @@ main {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 16px;
+}
+
+h2 {
+  margin-top: 16px;
 }
 </style>

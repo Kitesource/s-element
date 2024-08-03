@@ -33,7 +33,7 @@ export default defineConfig({
         items: [
           { text: 'Markdown Examples', link: '/markdown-examples' },
           { text: 'Runtime API Examples', link: '/api-examples' },
-          { text: 'Test here', link: '/api-examples' }
+          { text: 'Test here', link: '/api-examples' },
         ]
       },
       {
@@ -42,6 +42,7 @@ export default defineConfig({
           { text: 'Button', link: '/components/button' },
           { text: 'Input', link: '/components/input' },
           { text: 'Switch', link: '/components/switch' },
+          { text: 'Select', link: '/components/select' },
         ]
       }
     ],
