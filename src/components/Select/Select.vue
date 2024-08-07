@@ -163,7 +163,7 @@ const showClearIcon = computed(() => {
     props.clearable && states.selectedOption && states.mouseHover && states.inputValue.trim() !== ''
   )
 })
-function onClear(params: type) {
+function onClear() {
   states.selectedOption = null
   states.inputValue = ''
   emits('clear')

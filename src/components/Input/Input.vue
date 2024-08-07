@@ -95,10 +95,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, computed, useAttrs, nextTick } from 'vue'
+import { ref, watch, computed, useAttrs, nextTick, inject } from 'vue'
 import type { Ref } from 'vue'
 import type { InputProps, InputEmits } from './types'
 import Icon from '@/components/Icon/Icon.vue'
+import { formItemContextKey } from '@/components/Form/type'
+
+const formItemContext = inject(formItemContextKey)
+function runValidation(trigger?: string) {
+  formItemContext?.validate(trigger)
+}
 
 defineOptions({
   name: 'SkInput',
@@ -135,9 +141,11 @@ const keepFocus = async () => {
 const handleInput = () => {
   emits('update:modelValue', innerValue.value)
   emits('input', innerValue.value)
+  runValidation('input')
 }
 const handleChange = () => {
   emits('change', innerValue.value)
+  runValidation('change')
 }
 const handleFocus = (event: FocusEvent) => {
   isFocus.value = true
@@ -147,6 +155,7 @@ const handleBlur = (event: FocusEvent) => {
   // console.log('blur triggered')
   isFocus.value = false
   emits('blur', event)
+  runValidation('blur')
 }
 const clear = () => {
   // console.log('clear triggered')

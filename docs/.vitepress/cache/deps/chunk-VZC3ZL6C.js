@@ -1,4 +1,4 @@
-// node_modules/.pnpm/@vue+shared@3.4.35/node_modules/@vue/shared/dist/shared.esm-bundler.js
+// node_modules/.pnpm/@vue+shared@3.4.36/node_modules/@vue/shared/dist/shared.esm-bundler.js
 function makeMap(str, expectsLowerCase) {
   const set2 = new Set(str.split(","));
   return expectsLowerCase ? (val) => set2.has(val.toLowerCase()) : (val) => set2.has(val);
@@ -288,7 +288,7 @@ var stringifySymbol = (v, i = "") => {
   );
 };
 
-// node_modules/.pnpm/@vue+reactivity@3.4.35/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js
+// node_modules/.pnpm/@vue+reactivity@3.4.36/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js
 function warn(msg, ...args) {
   console.warn(`[Vue warn] ${msg}`, ...args);
 }
@@ -1484,7 +1484,7 @@ var TriggerOpTypes = {
   "CLEAR": "clear"
 };
 
-// node_modules/.pnpm/@vue+runtime-core@3.4.35/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js
+// node_modules/.pnpm/@vue+runtime-core@3.4.36/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js
 var stack = [];
 function pushWarningContext(vnode) {
   stack.push(vnode);
@@ -5374,6 +5374,7 @@ Server rendered element contains more child nodes than client vdom.`
       }
       if (props) {
         if (true) {
+          const isCustomElement = el.tagName.includes("-");
           for (const key in props) {
             if (// #11189 skip if this node has directives that have created hooks
             // as it could have mutated the DOM in any possible way
@@ -5381,7 +5382,7 @@ Server rendered element contains more child nodes than client vdom.`
               logMismatchError();
             }
             if (forcePatch && (key.endsWith("value") || key === "indeterminate") || isOn(key) && !isReservedProp(key) || // force hydrate v-bind with .prop modifiers
-            key[0] === ".") {
+            key[0] === "." || isCustomElement) {
               patchProp2(el, key, null, props[key], void 0, parentComponent);
             }
           }
@@ -9651,7 +9652,7 @@ function isMemoSame(cached, memo) {
   }
   return true;
 }
-var version = "3.4.35";
+var version = "3.4.36";
 var warn2 = true ? warn$1 : NOOP;
 var ErrorTypeStrings = ErrorTypeStrings$1;
 var devtools = true ? devtools$1 : void 0;
@@ -9670,7 +9671,7 @@ var resolveFilter = null;
 var compatUtils = null;
 var DeprecationTypes = null;
 
-// node_modules/.pnpm/@vue+runtime-dom@3.4.35/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js
+// node_modules/.pnpm/@vue+runtime-dom@3.4.36/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js
 var svgNS = "http://www.w3.org/2000/svg";
 var mathmlNS = "http://www.w3.org/1998/Math/MathML";
 var doc = typeof document !== "undefined" ? document : null;
@@ -11253,7 +11254,7 @@ var initDirectivesForSSR = () => {
   }
 };
 
-// node_modules/.pnpm/vue@3.4.35_typescript@5.4.5/node_modules/vue/dist/vue.runtime.esm-bundler.js
+// node_modules/.pnpm/vue@3.4.36_typescript@5.4.5/node_modules/vue/dist/vue.runtime.esm-bundler.js
 function initDev() {
   {
     initCustomFormatter();
@@ -11435,7 +11436,7 @@ export {
 
 @vue/shared/dist/shared.esm-bundler.js:
   (**
-  * @vue/shared v3.4.35
+  * @vue/shared v3.4.36
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)
@@ -11443,14 +11444,14 @@ export {
 
 @vue/reactivity/dist/reactivity.esm-bundler.js:
   (**
-  * @vue/reactivity v3.4.35
+  * @vue/reactivity v3.4.36
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)
 
 @vue/runtime-core/dist/runtime-core.esm-bundler.js:
   (**
-  * @vue/runtime-core v3.4.35
+  * @vue/runtime-core v3.4.36
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)
@@ -11458,7 +11459,7 @@ export {
 
 @vue/runtime-dom/dist/runtime-dom.esm-bundler.js:
   (**
-  * @vue/runtime-dom v3.4.35
+  * @vue/runtime-dom v3.4.36
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)
@@ -11466,9 +11467,9 @@ export {
 
 vue/dist/vue.runtime.esm-bundler.js:
   (**
-  * vue v3.4.35
+  * vue v3.4.36
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)
 */
-//# sourceMappingURL=chunk-XILDEMAI.js.map
+//# sourceMappingURL=chunk-VZC3ZL6C.js.map

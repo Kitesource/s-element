@@ -2,7 +2,7 @@ import type { VNode } from "vue";
 
 export interface SelectOption {
   label: string;
-  value: string | number;
+  value: string;
   disabled?: boolean;
 }
 
@@ -23,15 +23,15 @@ export interface SelectProps {
 }
 
 export interface SelectStates {
-  inputValue: string | number;
+  inputValue: string;
   selectedOption: null | SelectOption;
   mouseHover: boolean
   loading: boolean
 }
 
 export type RenderLabelFunc = (option: SelectOption) => VNode
-export type CustomFilterFunc = (value: string | number) => SelectOption[]
-export type CustomFilterRemoteFunc = (value: string | number) => Promise<SelectOption[]>
+export type CustomFilterFunc = (value: string) => SelectOption[]
+export type CustomFilterRemoteFunc = (value: string) => Promise<SelectOption[]>
 
 export interface SelectEmits {
   (e: 'change', value: string): void;
