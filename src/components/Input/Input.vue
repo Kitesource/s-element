@@ -103,7 +103,9 @@ import { formItemContextKey } from '@/components/Form/type'
 
 const formItemContext = inject(formItemContextKey)
 function runValidation(trigger?: string) {
-  formItemContext?.validate(trigger)
+  formItemContext?.validate(trigger).catch((e) => {
+    console.error(e.errors)
+  })
 }
 
 defineOptions({

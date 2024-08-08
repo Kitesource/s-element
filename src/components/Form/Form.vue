@@ -42,6 +42,14 @@ async function validate() {
   if (Object.keys(validateErrors).length === 0) return true
   return Promise.reject(validateErrors)
 }
+const resetFields = (keys: string[] = []) => {
+  const filteredFields = keys?.length ? fields.filter((_) => keys.includes(_.prop!)) : fields
+  filteredFields.forEach((_) => _.resetField())
+}
+const clearValidate = (keys: string[] = []) => {
+  const filteredFields = keys?.length ? fields.filter((_) => keys.includes(_.prop!)) : fields
+  filteredFields.forEach((_) => _.clearValidate())
+}
 
 provide<FormContext>(formContextKey, {
   ...props,
@@ -50,7 +58,9 @@ provide<FormContext>(formContextKey, {
 })
 
 defineExpose<FormInstance>({
-  validate
+  validate,
+  clearValidate,
+  resetFields
 })
 </script>
 

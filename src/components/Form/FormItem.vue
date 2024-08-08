@@ -2,7 +2,13 @@
 import { isArray, isNil } from 'lodash-es'
 import { inject, computed, reactive, provide, onMounted, onUnmounted } from 'vue'
 import Schema from 'async-validator'
-import type { FormItemProps, FormValidateFailure, FormItemContext } from './type'
+import type {
+  FormItemProps,
+  FormValidateFailure,
+  FormItemContext,
+  FormItemInstance,
+  ValidateStatus
+} from './type'
 import { formContextKey, formItemContextKey } from './type'
 
 defineOptions({
@@ -11,7 +17,8 @@ defineOptions({
 const props = defineProps<FormItemProps>()
 
 const formContext = inject(formContextKey)
-const validateStatus = reactive({
+let initialValue: string | null = null
+const validateStatus = reactive<ValidateStatus>({
   state: 'init',
   errorMsg: '',
   loading: false
@@ -32,6 +39,9 @@ const itemRules = computed(() => {
   }
   return null
 })
+const isRequierd = computed(() => {
+  return itemRules.value?.some((_) => _.required)
+})
 
 function getTriggeredRules(trigger?: string) {
   const rules = itemRules.value
@@ -46,7 +56,7 @@ function getTriggeredRules(trigger?: string) {
   }
   return []
 }
-const validate = (trigger?: string) => {
+const validate = async (trigger?: string) => {
   const modelName = props.prop
   const triggeredRules = getTriggeredRules(trigger)
   if (triggeredRules.length === 0) return Promise.resolve(true)
@@ -72,19 +82,42 @@ const validate = (trigger?: string) => {
   }
 }
 
+const clearValidate = () => {
+  validateStatus.state = 'init'
+  validateStatus.errorMsg = ''
+  validateStatus.loading = false
+}
+const resetField = () => {
+  clearValidate()
+  const model = formContext?.model
+  if (model && props.prop && !isNil(model[props.prop])) {
+    model[props.prop] = initialValue!
+  }
+}
+
 const context: FormItemContext = {
   prop: props.prop,
-  validate
+  validate,
+  clearValidate,
+  resetField
 }
 provide(formItemContextKey, context)
 
 onMounted(() => {
   if (props.prop) {
     formContext?.addField(context)
+    initialValue = innerValue.value
   }
 })
 onUnmounted(() => {
   formContext?.removeField(context)
+})
+
+defineExpose<FormItemInstance>({
+  validate,
+  clearValidate,
+  resetField,
+  validateStatus
 })
 </script>
 
@@ -94,7 +127,8 @@ onUnmounted(() => {
     :class="{
       'is-error': validateStatus.state === 'error',
       'is-success': validateStatus.state === 'success',
-      'is-loading': validateStatus.loading
+      'is-loading': validateStatus.loading,
+      'is-required': isRequierd
     }"
   >
     <label class="sk-form-item__label">
@@ -107,7 +141,7 @@ onUnmounted(() => {
       <div v-if="validateStatus.state === 'error'" class="sk-form-item__error-msg">
         {{ validateStatus.errorMsg }}
       </div>
-      {{ innerValue }} - {{ itemRules }}
+      <!-- {{ innerValue }} - {{ itemRules }} -->
     </div>
   </div>
 </template>

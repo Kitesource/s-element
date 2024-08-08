@@ -8,7 +8,8 @@ import { createMessage } from '@/components/Message/method'
 
 const model = reactive({
   email: '',
-  password: ''
+  password: '',
+  confirm_password: ''
 })
 
 const rules = {
@@ -16,7 +17,11 @@ const rules = {
     { type: 'email', required: true, trigger: 'blur' },
     { type: 'string', required: true, trigger: 'input' }
   ],
-  password: [{ type: 'string', required: true, trigger: 'blur', min: 3, max: 6 }]
+  password: [{ type: 'string', required: true, trigger: 'blur', min: 3, max: 6 }],
+  confirm_password: [
+    { type: 'string', required: true, trigger: 'blur', min: 3, max: 6 },
+    { validator: (rule, value) => value === model.password, trigger: 'blur', message: '密码不一致' }
+  ]
 }
 
 const formRef = ref()
@@ -36,6 +41,10 @@ async function submit() {
     })
   }
 }
+function reset() {
+  formRef.value?.resetFields()
+  formRef.value?.clearValidate()
+}
 </script>
 
 <template>
@@ -44,14 +53,17 @@ async function submit() {
       <Input v-model="model.email" />
     </FormItem>
     <FormItem label="password" prop="password">
+      <Input type="password" v-model="model.password" />
+    </FormItem>
+    <FormItem label="confirm password" prop="confirm_password">
       <template #label="{ label }">
         <b>{{ label }}</b>
       </template>
-      <Input type="password" v-model="model.password" />
+      <Input type="password" v-model="model.confirm_password" />
     </FormItem>
-    <div>
+    <div style="display: flex; justify-content: center">
       <Button type="primary" @click="submit">Submit</Button>
-      <Button>Reset</Button>
+      <Button @click="reset">Reset</Button>
     </div>
     <div>
       model:
