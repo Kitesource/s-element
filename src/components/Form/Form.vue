@@ -1,14 +1,57 @@
 <script lang="ts" setup>
 import { provide } from 'vue'
-import type { FormProps } from './type'
+import type {
+  FormItemContext,
+  FormProps,
+  FormValidateFailure,
+  FormInstance,
+  FormContext
+} from './type'
 import { formContextKey } from './type'
+import type { ValidateFieldsError } from 'async-validator'
 
 defineOptions({
   name: 'SkForm'
 })
 
 const props = defineProps<FormProps>()
-provide(formContextKey, props)
+const fields: FormItemContext[] = []
+
+function addField(field: FormItemContext) {
+  fields.push(field)
+}
+function removeField(field: FormItemContext) {
+  if (field.prop) {
+    fields.splice(fields.indexOf(field), 1)
+  }
+}
+
+async function validate() {
+  let validateErrors: ValidateFieldsError = {}
+  for (const field of fields) {
+    try {
+      await field.validate('')
+    } catch (e) {
+      const error = e as FormValidateFailure
+      validateErrors = {
+        ...validateErrors,
+        ...error.fields
+      }
+    }
+  }
+  if (Object.keys(validateErrors).length === 0) return true
+  return Promise.reject(validateErrors)
+}
+
+provide<FormContext>(formContextKey, {
+  ...props,
+  addField,
+  removeField
+})
+
+defineExpose<FormInstance>({
+  validate
+})
 </script>
 
 <template>

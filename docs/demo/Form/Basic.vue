@@ -4,6 +4,7 @@ import Form from '@/components/Form/Form.vue'
 import FormItem from '@/components/Form/FormItem.vue'
 import Input from '@/components/Input/Input.vue'
 import Button from '@/components/Button/Button.vue'
+import { createMessage } from '@/components/Message/method'
 
 const model = reactive({
   email: '',
@@ -17,10 +18,28 @@ const rules = {
   ],
   password: [{ type: 'string', required: true, trigger: 'blur', min: 3, max: 6 }]
 }
+
+const formRef = ref()
+async function submit() {
+  try {
+    await formRef.value.validate()
+    createMessage({
+      type: 'success',
+      message: '验证通过'
+    })
+  } catch (e) {
+    console.error(e)
+
+    createMessage({
+      type: 'danger',
+      message: '验证失败'
+    })
+  }
+}
 </script>
 
 <template>
-  <Form :model="model" :rules="rules">
+  <Form ref="formRef" :model="model" :rules="rules">
     <FormItem label="email" prop="email">
       <Input v-model="model.email" />
     </FormItem>
@@ -31,7 +50,7 @@ const rules = {
       <Input type="password" v-model="model.password" />
     </FormItem>
     <div>
-      <Button type="primary">Submit</Button>
+      <Button type="primary" @click="submit">Submit</Button>
       <Button>Reset</Button>
     </div>
     <div>

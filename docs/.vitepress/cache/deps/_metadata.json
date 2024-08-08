@@ -2,12 +2,12 @@
   "hash": "119a8c70",
   "configHash": "9837566e",
   "lockfileHash": "f92f2a67",
-  "browserHash": "2c842b1b",
+  "browserHash": "dced7a46",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.4.36_typescript@5.4.5/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "dbd05e35",
+      "fileHash": "1b495cc5",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
@@ -19,13 +19,13 @@
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/.pnpm/@vueuse+core@10.11.0_vue@3.4.36_typescript@5.4.5_/node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "3010e374",
+      "fileHash": "83e0fd50",
       "needsInterop": false
     },
     "@fortawesome/fontawesome-svg-core": {
       "src": "../../../../node_modules/.pnpm/@fortawesome+fontawesome-svg-core@6.6.0/node_modules/@fortawesome/fontawesome-svg-core/index.mjs",
       "file": "@fortawesome_fontawesome-svg-core.js",
-      "fileHash": "8484e15f",
+      "fileHash": "f05b0360",
       "needsInterop": false
     },
     "@fortawesome/free-solid-svg-icons": {
@@ -49,7 +49,7 @@
     "@vitepress-demo-preview/component": {
       "src": "../../../../node_modules/.pnpm/@vitepress-demo-preview+component@2.3.2_vitepress@1.3.2_@algolia+client-search@4.12.2_@types+_mysqiwibjrgrxmnrizg5coqnya/node_modules/@vitepress-demo-preview/component/dist/preview-component.js",
       "file": "@vitepress-demo-preview_component.js",
-      "fileHash": "0fc94fed",
+      "fileHash": "a98d1914",
       "needsInterop": false
     },
     "lodash-es": {
@@ -67,16 +67,22 @@
     "@fortawesome/vue-fontawesome": {
       "src": "../../../../node_modules/.pnpm/@fortawesome+vue-fontawesome@3.0.8_@fortawesome+fontawesome-svg-core@6.6.0_vue@3.4.36_typescript@5.4.5_/node_modules/@fortawesome/vue-fontawesome/index.es.js",
       "file": "@fortawesome_vue-fontawesome.js",
-      "fileHash": "63754d67",
+      "fileHash": "cc735d72",
+      "needsInterop": false
+    },
+    "@popperjs/core": {
+      "src": "../../../../node_modules/.pnpm/@popperjs+core@2.11.8/node_modules/@popperjs/core/lib/index.js",
+      "file": "@popperjs_core.js",
+      "fileHash": "abbbd377",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-VZC3ZL6C": {
-      "file": "chunk-VZC3ZL6C.js"
-    },
     "chunk-2Q2UYAJL": {
       "file": "chunk-2Q2UYAJL.js"
+    },
+    "chunk-VZC3ZL6C": {
+      "file": "chunk-VZC3ZL6C.js"
     }
   }
 }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { isArray, isNil } from 'lodash-es'
-import { inject, computed, reactive, provide } from 'vue'
+import { inject, computed, reactive, provide, onMounted, onUnmounted } from 'vue'
 import Schema from 'async-validator'
 import type { FormItemProps, FormValidateFailure, FormItemContext } from './type'
 import { formContextKey, formItemContextKey } from './type'
@@ -49,13 +49,13 @@ function getTriggeredRules(trigger?: string) {
 const validate = (trigger?: string) => {
   const modelName = props.prop
   const triggeredRules = getTriggeredRules(trigger)
-  if (triggeredRules.length === 0) return true
+  if (triggeredRules.length === 0) return Promise.resolve(true)
   if (modelName) {
     const validator = new Schema({
       [modelName]: triggeredRules
     })
     validateStatus.loading = true
-    validator
+    return validator
       .validate({ [modelName]: innerValue.value })
       .then(() => {
         validateStatus.state = 'success'
@@ -64,6 +64,7 @@ const validate = (trigger?: string) => {
         const { errors } = e
         validateStatus.state = 'error'
         validateStatus.errorMsg = errors?.[0]?.message ?? ''
+        return Promise.reject(e)
       })
       .finally(() => {
         validateStatus.loading = false
@@ -72,9 +73,19 @@ const validate = (trigger?: string) => {
 }
 
 const context: FormItemContext = {
+  prop: props.prop,
   validate
 }
 provide(formItemContextKey, context)
+
+onMounted(() => {
+  if (props.prop) {
+    formContext?.addField(context)
+  }
+})
+onUnmounted(() => {
+  formContext?.removeField(context)
+})
 </script>
 
 <template>
