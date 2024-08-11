@@ -8,8 +8,8 @@ import type {
   FormItemContext,
   FormItemInstance,
   ValidateStatus
-} from './type'
-import { formContextKey, formItemContextKey } from './type'
+} from './types'
+import { formContextKey, formItemContextKey } from './types'
 
 defineOptions({
   name: 'SkFormItem'

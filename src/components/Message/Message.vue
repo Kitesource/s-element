@@ -31,6 +31,11 @@ import RenderVnode from '@/components/Common/RenderVnode'
 import Icon from '@/components/Icon/Icon.vue'
 import { getLastBottomOffset } from './method'
 import useEventListener from '@/hooks/useEventListener'
+
+defineOptions({
+  name: 'SkMessage'
+})
+
 const props = withDefaults(defineProps<MessageProps>(), {
   type: 'info',
   duration: 3000,

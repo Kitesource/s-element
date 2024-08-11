@@ -6,8 +6,8 @@ import type {
   FormValidateFailure,
   FormInstance,
   FormContext
-} from './type'
-import { formContextKey } from './type'
+} from './types'
+import { formContextKey } from './types'
 import type { ValidateFieldsError } from 'async-validator'
 
 defineOptions({

@@ -99,7 +99,7 @@ import { ref, watch, computed, useAttrs, nextTick, inject } from 'vue'
 import type { Ref } from 'vue'
 import type { InputProps, InputEmits } from './types'
 import Icon from '@/components/Icon/Icon.vue'
-import { formItemContextKey } from '@/components/Form/type'
+import { formItemContextKey } from '@/components/Form/types'
 
 const formItemContext = inject(formItemContextKey)
 function runValidation(trigger?: string) {
