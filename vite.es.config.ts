@@ -4,7 +4,6 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import eslint from 'vite-plugin-eslint';
 import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
@@ -12,9 +11,9 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    eslint(),
     dts({
-      tsconfigPath: './tsconfig.build.json'
+      tsconfigPath: './tsconfig.build.json',
+      outDir: 'dist/types'
     }),
   ],
   resolve: {
@@ -23,6 +22,7 @@ export default defineConfig({
     }
   },
   build: {
+    outDir: 'dist/es',
     // https://cn.vitejs.dev/guide/build.html#library-mode
     lib: {
       // Could also be a dictionary or array of multiple entry points
@@ -31,7 +31,7 @@ export default defineConfig({
       name: 'SElement',
       // 输出的包文件名，默认是package.json 中的 name 字段
       fileName: 's-element',
-      formats: ['es', 'umd']
+      formats: ['es']
     },
     // https://rollupjs.org/configration-options
     rollupOptions: {
@@ -41,14 +41,12 @@ export default defineConfig({
         '@fortawesome/fontawesome-svg-core',
         '@fortawesome/free-solid-svg-icons',
         '@fortawesome/free-regular-svg-icons',
-        '@fortawesome/free-brands-svg-icons'
+        '@fortawesome/free-brands-svg-icons',
+        'async-validator',
+        'axios',
+        '@popperjs/core'
       ],
       output: {
-        exports: 'named',
-        // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-        globals: {
-          vue: 'Vue',
-        },
         assetFileNames: (chunk) => {
           if (chunk.name === 'style.css') {
             return 'index.css'

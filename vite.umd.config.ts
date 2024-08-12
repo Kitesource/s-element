@@ -4,18 +4,12 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import eslint from 'vite-plugin-eslint';
-import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    eslint(),
-    dts({
-      tsconfigPath: './tsconfig.build.json'
-    }),
   ],
   resolve: {
     alias: {
@@ -23,6 +17,7 @@ export default defineConfig({
     }
   },
   build: {
+    outDir: 'dist/umd',
     // https://cn.vitejs.dev/guide/build.html#library-mode
     lib: {
       // Could also be a dictionary or array of multiple entry points
@@ -31,18 +26,12 @@ export default defineConfig({
       name: 'SElement',
       // 输出的包文件名，默认是package.json 中的 name 字段
       fileName: 's-element',
-      formats: ['es', 'umd']
+      formats: ['umd']
     },
     // https://rollupjs.org/configration-options
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: [
-        'vue',
-        '@fortawesome/fontawesome-svg-core',
-        '@fortawesome/free-solid-svg-icons',
-        '@fortawesome/free-regular-svg-icons',
-        '@fortawesome/free-brands-svg-icons'
-      ],
+      external: ['vue'],
       output: {
         exports: 'named',
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量

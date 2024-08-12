@@ -1,31 +1,53 @@
 {
-  "name": "s-element",
+  "name": "@smilekite/element",
   "version": "1.0.0",
-  "private": true,
+  "description": "Vue3 components library",
+  "author": {
+    "name": "Smiley"
+  },
+  "license": "MIT",
   "type": "module",
+  "keywords": [
+    "Components",
+    "Vue3",
+    "Library"
+  ],
+  "homepage": "https://github.com/Kitesource/s-element",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kitesource/s-element"
+  },
   "files": [
     "dist"
   ],
-  "main": "./dist/s-element.umd.cjs",
-  "module": "./dist/s-element.js",
+  "main": "./dist/umd/s-element.umd.cjs",
+  "module": "./dist/es/s-element.js",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/s-element.js",
-      "require": "./dist/s-element.umd.cjs"
+      "import": "./dist/es/s-element.js",
+      "require": "./dist/umd/s-element.umd.cjs"
+    },
+    "./dist": {
+      "import": "./dist/",
+      "require": "./dist/"
     }
   },
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "run-p build-es build-umd",
     "preview": "vite preview",
     "build-only": "vite build",
+    "build-umd": "vite build --config vite.umd.config.ts",
+    "build-es": "vite build --config vite.es.config.ts",
     "test": "vitest",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
     "@algolia/client-search": "4.12",
