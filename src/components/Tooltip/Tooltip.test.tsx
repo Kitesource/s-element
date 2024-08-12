@@ -12,7 +12,7 @@ describe('Tooltip.vue', () => {
       () => (
         <div>
           <div id="outside"></div>
-          <Tooltip content="hello tooltip" trigger="click" onVisibleChange={onVisibleChange}>
+          <Tooltip content="hello tooltip" trigger="click" onVisible-Change={onVisibleChange}>
             <button id="trigger">Trigger</button>
           </Tooltip>
         </div>

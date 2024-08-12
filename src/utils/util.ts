@@ -4,7 +4,7 @@
  * @param {*} map 解决循环引用
  * @return {*}
  */
-export function cloneDeep(obj: any, map = new WeakMap()) {
+export function cloneDeep(obj: any, map = new WeakMap()): any {
   if (obj === null) return null;
   if (typeof obj !== 'object') return obj;
   if (obj instanceof RegExp) return new RegExp(obj);

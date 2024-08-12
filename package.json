@@ -1,8 +1,19 @@
 {
   "name": "s-element",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/s-element.umd.cjs",
+  "module": "./dist/s-element.js",
+  "exports": {
+    ".": {
+      "import": "./dist/s-element.js",
+      "require": "./dist/s-element.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -56,6 +67,7 @@
     "search-insights": "2",
     "typescript": "~5.4.0",
     "vite": "^5.3.1",
+    "vite-plugin-dts": "^3.5.4",
     "vite-plugin-eslint": "^1.8.1",
     "vitepress": "^1.0.0",
     "vitest": "^2.0.4",

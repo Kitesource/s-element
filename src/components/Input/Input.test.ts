@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
+import type { VueWrapper } from '@vue/test-utils'
 import Input from './Input.vue'
 
 describe('Input', () => {
@@ -7,7 +8,7 @@ describe('Input', () => {
     // 针对动态 class，查看 classes 是否正确
     // 针对 v-if 是否渲染正确的标签以及内容
     // 针对 slots，是否渲染对应的 slots 内容
-    const wrapper = mount(Input, {
+    const wrapper: VueWrapper<any> = mount(Input, {
       props: {
         size: 'small',
         type: 'text',
@@ -41,7 +42,7 @@ describe('Input', () => {
     expect(wrapper2.find('textarea').exists()).toBeTruthy()
   })
   it('支持 v-model', async () => {
-    const wrapper = mount(Input, {
+    const wrapper: VueWrapper<any> = mount(Input, {
       props: {
         modelValue: 'test',
         'onUpdate:modelValue': (e: any) => wrapper.setProps({ modelValue: e }),
