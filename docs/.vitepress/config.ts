@@ -6,7 +6,6 @@ import { containerPreview, componentPreview } from '@vitepress-demo-preview/plug
 export default defineConfig({
   title: "My Element Plus",
   description: "A VitePress Site",
-  outDir: fileURLToPath(new URL('../../dist/docs', import.meta.url)),
   vite: {
     resolve: {
       alias: {
