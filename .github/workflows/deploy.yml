@@ -15,25 +15,30 @@ jobs:
     # 设置 node 版本
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [20]
     steps:
       # 拉取 github 仓库代码
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
       # 设定 node 环境
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           # 设置发包 npm 地址仓库
           registry-url: https://registry.npmjs.org
+          cache: 'pnpm'
 
       # 安装依赖，相当于 npm ci
       - name: Install dependencies 📦️
-        run: npm install
+        run: pnpm install
 
       # 执行构建步骤
       - name: 构建
-        run: npm run build
+        run: pnpm run build
 
       # 执行部署
       - name: 部署
@@ -49,7 +54,7 @@ jobs:
 
         # 发布npm包
       - name: 'publish package'
-        run: npm publish
+        run: pnpm publish
         env:
           # 刚刚设置的 NPM_TOKEN
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
