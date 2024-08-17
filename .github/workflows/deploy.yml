@@ -9,7 +9,7 @@ on:
 
 # 按顺序运行作业
 jobs:
-  publish-npm:
+  deploy-and-publish:
     # 指定的运行器环境
     runs-on: ubuntu-latest
     # 设置 node 版本
@@ -19,21 +19,32 @@ jobs:
     steps:
       # 拉取 github 仓库代码
       - uses: actions/checkout@v3
+
       # 设定 node 环境
-      - uses: actions/setup-node@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           # 设置发包 npm 地址仓库
           registry-url: https://registry.npmjs.org
-      # 安装依赖，相当于 npm ci
-      - name: Install dependencies 📦️
-        run: npm install
+          # cache deps for pnpm
+          cache: pnpm
+
+      # 包管理工具
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          # choose pnpm version to use
+          version: 8
+          # install deps with pnpm
+          run_install: true
+
       # 执行构建步骤
       - name: 构建
-        run: |
-          npm run build
+        run: pnpm run build
+
       # 执行部署
-      - name: 部署
+      - name: Deploy to GitHub Pages
         # 这个 action 会根据配置自动推送代码到指定分支 https://github.com/JamesIves/github-pages-deploy-action
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
@@ -43,7 +54,10 @@ jobs:
           BRANCH: pages
           # 指定构建之后的产物要推送哪个目录的代码
           FOLDER: docs/.vuepress/dist
-      - run: npm publish
+
+        # 发布NPM 包
+      - name: publish package to NPM
+        run: pnpm publish
         env:
-          # 刚刚设置的 NPM_TOKEN
+          # 设置的 NPM_TOKEN
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
