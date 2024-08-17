@@ -35,7 +35,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "run-p docs:build build-es build-umd",
+    "build": "run-p build-es build-umd docs:build",
     "preview": "vite preview",
     "build-only": "vite build",
     "build-umd": "vite build --config vite.umd.config.ts",
