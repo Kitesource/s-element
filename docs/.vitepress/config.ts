@@ -4,7 +4,8 @@ import { containerPreview, componentPreview } from '@vitepress-demo-preview/plug
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: 's-element',
+  // https://vuepress.github.io/guide/deployment.html#github-pages
+  base: '/s-element/',
   title: "My Element Plus",
   description: "A VitePress Site",
   vite: {
