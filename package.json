@@ -46,8 +46,7 @@
     "format": "prettier --write src/",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
-    "prepublishOnly": "pnpm run build"
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "@algolia/client-search": "4.12",
