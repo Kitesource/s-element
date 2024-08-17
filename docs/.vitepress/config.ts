@@ -6,6 +6,7 @@ import { containerPreview, componentPreview } from '@vitepress-demo-preview/plug
 export default defineConfig({
   title: "My Element Plus",
   description: "A VitePress Site",
+  base: "/s-element/",
   vite: {
     resolve: {
       alias: {
