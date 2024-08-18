@@ -33,7 +33,7 @@ jobs:
 
       # 安装依赖，相当于 npm ci
       - name: Install dependencies 📦️
-        run: pnpm store prune && pnpm install
+        run: pnpm install
 
       # 执行构建步骤
       - name: 构建
@@ -53,7 +53,7 @@ jobs:
 
         # 发布npm包
       - name: 'publish package'
-        run: pnpm store prune && pnpm publish --force --no-git-checks
+        run: pnpm publish --force --no-git-checks
         env:
           # 刚刚设置的 NPM_TOKEN
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
