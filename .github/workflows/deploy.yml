@@ -31,6 +31,10 @@ jobs:
           # 设置发包 npm 地址仓库
           registry-url: https://registry.npmjs.org
 
+        # 安装依赖，相当于 npm ci
+      - name: clear cache 📦️
+        run: npm cache clean --force
+
       # 安装依赖，相当于 npm ci
       - name: Install dependencies 📦️
         run: pnpm install
