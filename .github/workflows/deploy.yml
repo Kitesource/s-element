@@ -42,7 +42,7 @@ jobs:
 
       # 查看目录结构
       - name: 查看目录结构
-        run: tree /home/runner/work/s-element/s-element
+        run: tree -a /home/runner/work/s-element/s-element
 
       # 执行部署
       - name: 部署
