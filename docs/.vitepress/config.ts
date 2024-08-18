@@ -6,6 +6,9 @@ import { containerPreview, componentPreview } from '@vitepress-demo-preview/plug
 export default defineConfig({
   title: "My Element Plus",
   description: "A VitePress Site",
+  head: [
+    ["link", { rel: "icon", href: "/s-element/favicon.ico" }]
+  ],
   base: "/s-element/",
   vite: {
     resolve: {

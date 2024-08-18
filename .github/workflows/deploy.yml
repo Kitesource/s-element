@@ -54,7 +54,7 @@ jobs:
 
         # 发布npm包
       - name: 'publish package'
-        run: pnpm publish --force
+        run: pnpm publish --force --no-git-checks
         env:
           # 刚刚设置的 NPM_TOKEN
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
