@@ -16,6 +16,9 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
+## Online Preview
+[s-element](https://kitesource.github.io/s-element/)
+
 ```sh
 pnpm install
 ```
